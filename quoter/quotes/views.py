@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 # Create your views here.
 def index(request):
-    return HttpResponse("Index page.")
+    return render(request, 'quotes/index.html')
 
 def detail(request, quote_id):
-    return HttpResponse("Quote page for quote id %s" % quote_id)
+    return render(request, 'quotes/detail.html', context={'quote_id': quote_id})
