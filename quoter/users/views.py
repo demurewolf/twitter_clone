@@ -1,5 +1,6 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout 
 
 from .forms import RegisterForm
 
@@ -8,17 +9,17 @@ from .forms import RegisterForm
 def profile(request, username):
     return render(request, 'users/profile.html', context={'username': username})
 
-def login(request):
-    return render(request, 'users/login.html')
-
 def register(request):
 
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, "Account created for %s" % username)
+            return redirect('/')
 
     else:
         form = RegisterForm()
     
-    return render(request, 'users/register.html', context={'form': form})
+    return render(request, 'registration/register.html', context={'form': form})
