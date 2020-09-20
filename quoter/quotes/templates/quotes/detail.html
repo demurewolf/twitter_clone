@@ -1,4 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-Detail page for {{ quote_id }}
+    Detail page for quote {{ quote.id }}
+
+    <h3><a href="{% url 'users:profile' username=quote.author %}">{{ quote.author }}</a></h3>
+    <h3>{{ quote.pub_date }}</h3>
+    <p>{{ quote.content }}</p>
+
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" name="Comment">
+    </form>
+
+    {% for comment in comments %}
+        <h4>{{ comment.author }}</h4>
+        <h4>{{ comment.pub_date }}</h4>
+        <p>{{ comment.content }}</p>
+    {% endfor %}
+
 {% endblock %}

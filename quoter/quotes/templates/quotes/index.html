@@ -1,4 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-Index page
+    Index page
+
+    {% if user.is_authenticated %}
+        <p>Current user is {{ user.username }}.</p>
+    {% endif %}
+
+    {% for quote in quotes %}
+        <h3><a href="{% url 'quotes:detail' quote_id=quote.id%}">{{ quote.author }}</a></h3>
+        <h3>{{ quote.pub_date }}</h3>
+        <p>{{ quote.content }}</p>
+    {% endfor %}
+
 {% endblock %}
