@@ -1,7 +1,7 @@
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
-# from djgano.views import generic
+from .forms import RegisterForm
 
 # Create your views here.
 
@@ -12,4 +12,13 @@ def login(request):
     return render(request, 'users/login.html')
 
 def register(request):
-    return render(request, 'users/register.html')
+
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+    else:
+        form = RegisterForm()
+    
+    return render(request, 'users/register.html', context={'form': form})
