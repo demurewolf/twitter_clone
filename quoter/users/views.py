@@ -6,14 +6,13 @@ from .forms import RegisterForm
 
 # Create your views here.
 def register(request):
-
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, "Account created for %s" % username)
-            return redirect('/')
+            return redirect('registration/login/')
 
     else:
         form = RegisterForm()
