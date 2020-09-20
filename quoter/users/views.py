@@ -5,10 +5,6 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import RegisterForm
 
 # Create your views here.
-
-def profile(request, username):
-    return render(request, 'users/profile.html', context={'username': username})
-
 def register(request):
 
     if request.method == 'POST':
@@ -23,3 +19,12 @@ def register(request):
         form = RegisterForm()
     
     return render(request, 'registration/register.html', context={'form': form})
+
+def profile(request, username):
+    return render(request, 'users/profile.html', context={'username': username})
+
+def followers(request, username):
+    return render(request, 'users/followers.html', context={'username': username})
+
+def following(request, username):
+    return render(request, 'users/following.html', context={'username': username})
