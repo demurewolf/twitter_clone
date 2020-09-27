@@ -1,15 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
-    Index page
-
-    {% if user.is_authenticated %}
-        <p>Current user is {{ user.username }}.</p>
-    {% endif %}
-
-    {% for quote in quotes %}
-        <h3><a href="{% url 'quotes:detail' quote_id=quote.id%}">{{ quote.author }}</a></h3>
-        <h3>{{ quote.pub_date }}</h3>
-        <p>{{ quote.content }}</p>
+     {% for quote in quotes %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><a href="{% url 'quotes:detail' quote_id=quote.id%}">{{ quote.author }}</a></h3>
+                <p class="card-text">{{ quote.content }}</p>
+                <p class="card-text">{{ quote.pub_date }}</p>
+            </div>
+        </div>
+    {% empty %}
+        <div class="card">
+            <div class="card-body">
+            <h5 class="card-title">Sorry, no quotes to show.</h5>
+            </div>
+        </div>
     {% endfor %}
 
 {% endblock %}
