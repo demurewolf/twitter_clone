@@ -18,26 +18,33 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-sm navbar-fixed-top bg-dark navbar-dark">
-            <div class="navbar-header">
-            <a class="navbar-brand" href="{% url 'quotes:index' %}">Quoter</a>
-            </div>
+            <div class="container">
+                <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'quotes:index' %}">Quoter</a>
+                </div>
 
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="{% url 'quotes:index' %}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Admin</a></li>
-                
-                {% if not user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                
-                {% else %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'quotes:create' %}">Create</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-                {% endif %}
-            </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'quotes:index' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'users:search' %}">Search</a></li>
+                    
+                    {% if not user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'quotes:create' %}">Create</a></li>
+
+                        {% if user.is_staff %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Admin</a></li>
+                        {% endif %}
+                    
+                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    {% endif %}
+                </ul>
+            </div>
         </nav>
 
-        <div id="content">
+        <div id="content" class="container">
             {% block content %}{% endblock %}
         </div>
     </body>
