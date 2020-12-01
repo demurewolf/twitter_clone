@@ -1,4 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-Profile page for user {{ username }}
+    <p>Profile page for {{ profile_username }}</p>
+    
+    {% for field, value in info %}
+        {% if value %}
+        <p>{{ field }} : {{ value }}</p>
+        
+        {% else %}
+        <p>{{ field }} : No value</p>
+        {% endif %}
+
+    {% endfor %}
+    
+    {% if can_edit %}
+        <a href="{% url 'users:edit' %}">Click here for the edit form!</a>
+    {% endif %}
 {% endblock %}
