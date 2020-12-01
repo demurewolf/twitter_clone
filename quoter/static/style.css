@@ -1,0 +1,23 @@
+a.card-anchor:link {
+    color: black;
+    text-decoration: none;
+}
+  
+a.card-anchor:visited {
+    color: black;
+    text-decoration: none;
+}
+  
+a.card-anchor:hover {
+    color: black;
+    text-decoration: none;
+}
+
+a.card-anchor:hover div.card {
+    background-color: lightgrey;
+}  
+
+a.card-anchor:active {
+    color: black;
+    text-decoration: none;
+}
