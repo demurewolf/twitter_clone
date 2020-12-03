@@ -27,12 +27,15 @@ def detail(request, quote_id):
     # Present form for new comments if user is logged in
     if request.user.is_authenticated:
         form = CommentForm()
+        delete_perm = request.user.username == quote.author.username
+
     else:
         form = None
+        delete_perm = False
         
     comments = Comment.objects.filter(quote=quote_id)
 
-    return render(request, 'quotes/detail.html', context={'quote': quote, 'comments': comments, 'form': form})
+    return render(request, 'quotes/detail.html', context={'quote': quote, 'comments': comments, 'form': form, 'delete_perm':delete_perm})
 
 @login_required
 def create(request):

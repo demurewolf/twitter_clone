@@ -6,15 +6,17 @@
     <h3>{{ quote.pub_date }}</h3>
     <p>{{ quote.content }}</p>
 
-    <form method="DELETE" action="{% url 'quotes:delete' quote_id=quote.id%}">
-        <input type="submit" name="Delete Quote">
-    </form>
-
+    {% if delete_perm %}
+        <form method="DELETE" action="{% url 'quotes:delete' quote_id=quote.id%}">
+            <input type="submit" name="Delete" value="Delete Quote">
+        </form>
+    {% endif %}
+    
     {% if form %}
         <form method="POST" action="">
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" name="Comment">
+            <input type="submit" name="Comment" value="Comment">
         </form>
     {% endif %}
 
