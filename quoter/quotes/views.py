@@ -6,7 +6,7 @@ from .forms import QuoteForm, CommentForm
 
 from django.contrib.auth.decorators import login_required
 
-# Create your views here.
+# Home page of quoter app
 def index(request):
     feed = Quote.objects.order_by('-pub_date')
     return render(request, 'quotes/index.html', context={'quotes': feed})
@@ -24,7 +24,11 @@ def detail(request, quote_id):
             form.instance.quote = quote
             form.save()
 
-    form = CommentForm() # Clears form for new comments
+    # Present form for new comments if user is logged in
+    if request.user.is_authenticated:
+        form = CommentForm()
+    else:
+        form = None
         
     comments = Comment.objects.filter(quote=quote_id)
 
@@ -44,7 +48,11 @@ def create(request):
 
     return render(request, 'quotes/create.html', context={'form': form})
 
-@login_required
+@login_required(login_url="login")
 def delete(request, quote_id):
-    return render(request, 'quotes/delete.html', context={'quote_id': quote_id})
-
+    Quote.objects.filter(id=quote_id, author=request.user).delete()
+    return index(request) # Redirect to homepage
+    
+@login_required
+def requote(request, quote_id):
+    return Http404("Coming underway")
