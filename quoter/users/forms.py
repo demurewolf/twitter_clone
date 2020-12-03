@@ -12,7 +12,7 @@ class RegisterForm(UserCreationForm):
             'username',
             'email',
             'password1',
-            'password2',
+            'password2', # Password consistency check
         ]
 
 class ProfileForm(ModelForm):
