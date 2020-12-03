@@ -13,18 +13,34 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 from os.path import join
 
+import environ
+
+env = environ.Env(
+    # set casting & default value
+    DEBUG=(bool, False),
+)
+
+# Read .env file
+environ.Env.read_env()
+
+# Configure the following settings based on .env file
+
+DEBUG = env('DEBUG')
+SECRET_KEY = env('SECRET_KEY')
+
+# Database
+# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+
+DATABASES = {
+    'default': env.db(),
+}
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '3@x(u4g!wt&bq488@4*dgk2_kqppq3tvu*$qb#mzehshv9^*ox'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = [
     'jospi',
@@ -78,21 +94,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'quoter.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'quoter',
-        'USER': 'quoter',
-        'PASSWORD': 'quoter',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-}
 
 
 # Password validation
