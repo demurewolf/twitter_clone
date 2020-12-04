@@ -19,5 +19,18 @@ class Profile(models.Model):
             ('birth_date', self.birth_date),
         ]
 
+    @property
+    def follower_count(self):
+        return Follow.objects.filter(dst_user=self.user).count()
+
     def __str__(self):
-        return "%s's user profile." % self.user.get_username()
+        return "%s's user profile." % self.user.username
+
+class Follow(models.Model):    
+    src_user = models.ForeignKey(User, related_name='sources', on_delete=models.CASCADE)
+    
+    # User requested to follow
+    dst_user = models.ForeignKey(User, related_name='destinations', on_delete=models.CASCADE) 
+
+    class Meta:
+        unique_together = (('src_user', 'dst_user'),)

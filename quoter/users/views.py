@@ -6,9 +6,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from .forms import RegisterForm, ProfileForm
-from .models import Profile
+from .models import Profile, Follow
 
-# Create your views here.
+from quotes.models import Quote
+
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -22,6 +23,25 @@ def register(request):
         form = RegisterForm()
     
     return render(request, 'registration/register.html', context={'form': form})
+
+@login_required(login_url="login")
+def follow_user(request, username):
+    user_to_follow = get_object_or_404(User, username=username)
+    user_following = request.user
+    
+    if not Follow.objects.filter(src_user=user_following, dst_user=user_to_follow):
+        new_follow = Follow(src_user=user_following, dst_user=user_to_follow)
+        new_follow.save()
+
+    return HttpResponse("noOp")
+
+@login_required(login_url="login")
+def unfollow_user(request, username):
+    user_to_follow = get_object_or_404(User, username=username)
+    user_following = request.user
+
+    Follow.objects.filter(src_user=user_following, dst_user=user_to_follow).delete()
+    return HttpResponse("noOp")
 
 def profile(request, username):
     profile_user = get_object_or_404(User, username=username)
