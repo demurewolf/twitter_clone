@@ -7,7 +7,7 @@
     <p>{{ quote.content }}</p>
 
     {% if delete_perm %}
-        <form method="DELETE" action="{% url 'quotes:delete' quote_id=quote.id%}">
+        <form method="GET" action="{% url 'quotes:delete' quote_id=quote.id%}">
             <input type="submit" name="Delete" value="Delete Quote">
         </form>
     {% endif %}
