@@ -4,11 +4,18 @@ from django.shortcuts import render, redirect
 from .models import Quote, Comment
 from .forms import QuoteForm, CommentForm
 
+from users.models import Follow
+
 from django.contrib.auth.decorators import login_required
 
 # Home page of quoter app
 def index(request):
-    feed = Quote.objects.order_by('-pub_date')
+    if request.user.is_authenticated:
+        following = Follow.objects.filter(src_user=request.user).values('dst_user')
+        feed = Quote.objects.filter(author__in=following).order_by('-pub_date')
+    else:
+        feed = Quote.objects.order_by('-pub_date')
+    
     return render(request, 'quotes/index.html', context={'quotes': feed})
 
 def detail(request, quote_id):
