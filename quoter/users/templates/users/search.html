@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h3>User Search</h3>
+
+    <form action="{% url 'users:search' %}" method="GET">
+        <input name="search_query" type="text" placeholder={{placeholder}}>
+        <input type="submit" name="Search">
+    </form>
+
+    {% for u in results %}
+    <a href="{% url 'users:profile' username=u %}" class="card-anchor">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ u }}</h3>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+
+{% endblock %}

@@ -66,7 +66,18 @@ def profile(request, username):
     except Profile.DoesNotExist:
         profile = Profile()
 
-    return render(request, 'users/profile.html', context={'can_edit': can_edit, 'profile_username': profile_user.username,'info': profile.get_fields})
+    followers_count = Follow.objects.filter(dst_user=profile_user).count()
+    following_count = Follow.objects.filter(src_user=profile_user).count()
+
+    _context = {
+        'can_edit': can_edit,
+        'profile_username': profile_user.username,
+        'info': profile.get_fields,
+        'followers': followers_count,
+        'following': following_count,
+    }
+
+    return render(request, 'users/profile.html', context=_context)
 
 @login_required
 def edit_profile(request):
@@ -88,4 +99,14 @@ def edit_profile(request):
     return render(request, 'users/edit_profile.html', context={'form': form})
 
 def search(request):
-    return HttpResponse("coming underway...")
+    search_term = ''
+    if 'search_query' in request.GET:
+        search_term = request.GET['search_query']
+        users = [u.username for u in User.objects.filter(username__icontains=search_term)]
+        placeholder_text = search_term
+
+    else:
+        users = []
+        placeholder_text = "Enter your query..."
+
+    return render(request, 'users/search.html', context={'results': users, 'placeholder': placeholder_text})

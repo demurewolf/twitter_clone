@@ -17,7 +17,8 @@
         <br>
     {% endif %}
 
-    <a href="{% url 'users:followers' username=profile_username %}">Followers</a>
+    <a href="{% url 'users:following' username=profile_username %}">{{following}} Following</a>
     <br>
-    <a href="{% url 'users:following' username=profile_username %}">Following</a>
+    <a href="{% url 'users:followers' username=profile_username %}">{{followers}} Followers</a>
+    
 {% endblock %}
