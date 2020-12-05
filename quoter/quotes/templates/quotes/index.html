@@ -2,13 +2,15 @@
 {% block content %}
      {% for quote in quotes %}
         <a href="{% url 'quotes:detail' quote_id=quote.id%}" class="card-anchor">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">{{ quote.author }}</h3>
-                <p class="card-text">{{ quote.content }}</p>
-                <p class="card-text">{{ quote.pub_date }}</p>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{ quote.author }}
+                    </h5>
+                    <p class="card-text">{{ quote.content }}</p>
+                    <p class="card-text">{{ quote.pub_date }}</p>
+                </div>
             </div>
-        </div>
         </a>
     {% empty %}
         <div class="card">
