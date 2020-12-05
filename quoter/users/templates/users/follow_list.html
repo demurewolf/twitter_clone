@@ -1,0 +1,19 @@
+{% extends follow_template_name %}
+
+{% block follow_list %}
+    {% for name in names %}
+        <a href="{% url 'users:profile' username=name %}" class="card-anchor">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ name }}</h3>
+            </div>
+        </div>
+        </a>
+    {% empty %}
+        <div class="card">
+            <div class="card-body">
+            <h5 class="card-title">Sorry, no follows to show.</h5>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

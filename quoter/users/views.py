@@ -43,6 +43,20 @@ def unfollow_user(request, username):
     Follow.objects.filter(src_user=user_following, dst_user=user_to_follow).delete()
     return HttpResponse("noOp")
 
+def followers(request, username):
+    user = get_object_or_404(User, username=username)
+    followers = Follow.objects.filter(dst_user=user)
+    followers_names = [f.src_user for f in followers]
+
+    return render(request, 'users/follow_list.html', context={'names': followers_names, 'follow_template_name':'users/followers.html'})
+
+def following(request, username):
+    user = get_object_or_404(User, username=username)
+    following = Follow.objects.filter(src_user=user)
+    following_names = [f.dst_user for f in following]
+
+    return render(request, 'users/follow_list.html', context={'names': following_names, 'follow_template_name':'users/following.html'})
+
 def profile(request, username):
     profile_user = get_object_or_404(User, username=username)
     can_edit = request.user.is_authenticated and (request.user.username == username)
