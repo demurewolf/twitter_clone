@@ -36,9 +36,10 @@
                     
                     {% else %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'quotes:create' %}">Create</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'users:profile' username=user.username%}">Profile</a></li>
 
                         {% if user.is_staff %}
-                            <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Admin</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Admin</a></li>
                         {% endif %}
                     
                     <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
