@@ -26,7 +26,8 @@ class Comment(models.Model):
     pub_date = models.DateTimeField(default=now)
     quote = models.ForeignKey(Quote, on_delete=models.CASCADE)
 
-class Requote(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    pub_date = models.DateTimeField(default=now)
+class Requote(Quote):
+    requote_author = models.ForeignKey(User, on_delete=models.CASCADE)
+    requote_pub_date = models.DateTimeField(default=now)
+    requote_content = models.TextField(max_length=400, validators=[MaxLengthValidator(400)])
     quote = models.ForeignKey(Quote, on_delete=models.CASCADE)

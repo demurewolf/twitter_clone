@@ -18,7 +18,7 @@ def index(request):
     
     return render(request, 'quotes/index.html', context={'quotes': feed})
 
-def detail(request, quote_id):
+def quote_detail(request, quote_id):
     try:
         quote = Quote.objects.get(pk=quote_id)
     except Quote.DoesNotExist:
@@ -44,8 +44,8 @@ def detail(request, quote_id):
 
     return render(request, 'quotes/detail.html', context={'quote': quote, 'comments': comments, 'form': form, 'delete_perm':delete_perm})
 
-@login_required
-def create(request):
+@login_required(login_url="login")
+def create_quote(request):
     if request.method == 'POST':
         form = QuoteForm(request.POST)
         if form.is_valid():
@@ -59,10 +59,14 @@ def create(request):
     return render(request, 'quotes/create.html', context={'form': form})
 
 @login_required(login_url="login")
-def delete(request, quote_id):
+def delete_quote(request, quote_id):
     Quote.objects.filter(id=quote_id, author=request.user).delete()
     return index(request) # Redirect to homepage
     
-@login_required
+@login_required(login_url="login")
 def requote(request, quote_id):
     return Http404("Coming underway")
+
+@login_required(login_url="login")
+def delete_requote(request, quote_id):
+    return Http404("coming underway")
