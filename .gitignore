@@ -68,3 +68,6 @@ sftp-config.json
 # Visual Studio Code # 
 .vscode/* 
 .history
+
+# PyCharm
+.idea/
