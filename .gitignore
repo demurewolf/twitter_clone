@@ -70,5 +70,5 @@ sftp-config.json
 .vscode/* 
 .history
 
-# IDEA editors #
+# PyCharm
 .idea/
