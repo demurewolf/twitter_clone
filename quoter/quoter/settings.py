@@ -20,8 +20,11 @@ env = environ.Env(
     DEBUG=(bool, False),
 )
 
-# Read .env file
-environ.Env.read_env()
+# Read appropriate .env file
+ENV_PATH = env.str('ENV_PATH')
+env.read_env(ENV_PATH)
+
+# environ.Env.read_env()
 
 # Configure the following settings based on .env file
 
@@ -43,7 +46,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 ALLOWED_HOSTS = [
-    'jospi',
+    'localhost',
+    '127.0.0.1'
 ]
 
 
@@ -106,13 +110,15 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
 ]
+
+if not DEBUG:
+    AUTH_PASSWORD_VALIDATORS.append({
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'
+    })
+    AUTH_PASSWORD_VALIDATORS.append({
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'
+    })
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -136,3 +142,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     join(BASE_DIR, "static"),
 ]
+
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"

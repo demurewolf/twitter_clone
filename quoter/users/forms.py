@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 from .models import Profile
 
+
 class RegisterForm(UserCreationForm):
     class Meta:
         model = User
@@ -14,6 +15,7 @@ class RegisterForm(UserCreationForm):
             'password1',
             'password2', # Password consistency check
         ]
+
 
 class ProfileForm(ModelForm):
     class Meta:

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE)
@@ -26,11 +27,13 @@ class Profile(models.Model):
     def __str__(self):
         return "%s's user profile." % self.user.username
 
-class Follow(models.Model):    
+
+class Follow(models.Model):
+    # User making the follow request
     src_user = models.ForeignKey(User, related_name='sources', on_delete=models.CASCADE)
-    
+
     # User requested to follow
-    dst_user = models.ForeignKey(User, related_name='destinations', on_delete=models.CASCADE) 
+    dst_user = models.ForeignKey(User, related_name='destinations', on_delete=models.CASCADE)
 
     class Meta:
         unique_together = (('src_user', 'dst_user'),)

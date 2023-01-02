@@ -1,3 +1,4 @@
-django
+django==3.2
 gunicorn
 psycopg2
+django-environ
